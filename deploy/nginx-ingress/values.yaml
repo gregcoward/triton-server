@@ -25,8 +25,8 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 tags:
-  autoscaling: false
-  loadBalancing: false
+  autoscaling: true
+  loadBalancing: true
 
 image:
   imageName: nvcr.io/nvidia/tritonserver:24.03-py3
