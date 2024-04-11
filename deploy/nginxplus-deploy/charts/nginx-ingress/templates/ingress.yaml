@@ -15,7 +15,7 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: {{ template "triton-inference-server.fullname" . }}
+            name: example-triton-inference-server
             port:
               number: 8000
   - host: triton-grpc.f5demo.net
@@ -25,7 +25,7 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: {{ template "triton-inference-server.fullname" . }}
+            name: example-triton-inference-server
             port:
               number: 8001
   - host: triton-metrics.f5demo.net
@@ -35,6 +35,6 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: {{ template "triton-inference-server.fullname" . }}
+            name: example-triton-inference-server
             port:
               number: 8002
