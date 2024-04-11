@@ -3,10 +3,6 @@ kind: Ingress
 metadata:
   name: triton-ingress
 spec:
-  tls:
-  - hosts:
-    - cafe.example.com
-    secretName: cafe-secret
   rules:
   - host: triton-http.f5demo.net
     http:
