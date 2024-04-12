@@ -38,7 +38,6 @@ metadata:
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
 spec:
-  clusterIP: None
   ports:
     - port: 8000
       targetPort: http

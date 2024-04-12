@@ -3,6 +3,13 @@ kind: Ingress
 metadata:
   name: triton-ingress
 spec:
+  ingressClassName: nginx
+  tls:
+  - hosts:
+    - triton-http.f5demo.net
+    - triton-grpc.f5demo.net
+    - triton-metrics.f5demo.net
+    secretName: tls-secret
   rules:
   - host: triton-http.f5demo.net
     http:
@@ -11,7 +18,7 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: example-triton-inference-server
+            name: {{ template "triton-inference-server.fullname" . }}
             port:
               number: 8000
   - host: triton-grpc.f5demo.net
@@ -21,7 +28,7 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: example-triton-inference-server
+            name: {{ template "triton-inference-server.fullname" . }}
             port:
               number: 8001
   - host: triton-metrics.f5demo.net
@@ -31,6 +38,6 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: example-triton-inference-server
+            name: {{ template "triton-inference-server.fullname" . }}
             port:
               number: 8002
