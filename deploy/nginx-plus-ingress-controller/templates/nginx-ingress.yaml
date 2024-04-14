@@ -6,12 +6,13 @@ spec:
   ingressClassName: nginx
   tls:
   - hosts:
-    - triton-http.f5demo.net
-    - triton-grpc.f5demo.net
-    - triton-metrics.f5demo.net
-    secretName: my-tls-secret
+    - {{ .Values.tags.http_fqdn }}
+    - {{ .Values.tags.grpc_fqdn }}
+    - {{ .Values.tags.metrics_fqdn }}
+    - {{ .Values.tags.sys_metrics_fqdn }}
+    secretName: tls-secret
   rules:
-  - host: triton-http.f5demo.net
+  - host: {{ .Values.tags.http_fqdn }}
     http:
       paths:
       - path: /
@@ -21,7 +22,7 @@ spec:
             name: {{ template "triton-inference-server.fullname" . }}
             port:
               number: 8000
-  - host: triton-grpc.f5demo.net
+  - host: {{ .Values.tags.grpc_fqdn }}
     http:
       paths:
       - path: /
@@ -31,7 +32,7 @@ spec:
             name: {{ template "triton-inference-server.fullname" . }}
             port:
               number: 8001
-  - host: triton-metrics.f5demo.net
+  - host: {{ .Values.tags.metrics_fqdn }}
     http:
       paths:
       - path: /
@@ -41,3 +42,13 @@ spec:
             name: {{ template "triton-inference-server.fullname" . }}
             port:
               number: 8002
+  - host: {{ .Values.tags.sys_metrics_fqdn }}
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: {{ template "triton-inference-server-metrics.fullname" . }}
+            port:
+              number: 8080
