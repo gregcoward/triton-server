@@ -62,10 +62,12 @@ spec:
       {{- if .Values.controller.shareProcessNamespace }}
       shareProcessNamespace: true
       {{- end }}
+      imagePullSecrets:
+      - name: regcred
       containers:
-      - image: {{ include "nginx-ingress.image" . }}
-        name: {{ include "nginx-ingress.name" . }}
-        imagePullPolicy: "{{ .Values.controller.image.pullPolicy }}"
+      - image: private-registry.nginx.com/nginx-ic/nginx-plus-ingress:3.5.0
+        imagePullPolicy: IfNotPresent
+        name: nginx-plus-ingress
 {{- if .Values.controller.lifecycle }}
         lifecycle:
 {{ toYaml .Values.controller.lifecycle | indent 10 }}
