@@ -3,12 +3,13 @@ kind: Ingress
 metadata:
   name: nginx-ingress
 spec:
+  ingressClassName: nginx
   tls:
   - hosts:
     - triton-http.f5demo.net
     - triton-grpc.f5demo.net
     - triton-metrics.f5demo.net
-    secretName: tls-secret
+    secretName: my-tls-secret
   rules:
   - host: triton-http.f5demo.net
     http:
