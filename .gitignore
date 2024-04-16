@@ -1,8 +1,0 @@
-/build
-/builddir
-/.vscode
-*.so
-__pycache__
-tmp
-*.log
-test_results.txt
