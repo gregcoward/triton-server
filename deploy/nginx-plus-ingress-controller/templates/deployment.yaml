@@ -52,42 +52,18 @@ spec:
 
     spec:
       volumes:
-      - name: models
-        persistentVolumeClaim:
-          claimName: models-volume-claim
-      initContainers:
-      - name: load-triton-models
-        image: ghcr.io/mjmenger/load-models
-        volumeMounts:
         - name: models
-          mountPath: /models
-        env:
-        - name: LOAD_INCEPTION_GRAPHDEF
-          value: "1"
-        - name: LOAD_DENSENET_ONNX
-          value: "1"
-      - name: check-models
-        image: ghcr.io/mjmenger/check-models
-        volumeMounts:
-        - name: models
-          mountPath: /models
-        resources:
-          limits:
-            memory: "128Mi"
-            cpu: "500m"                 
+          nfs:
+            server: {{ .Values.image.modelRepositoryServer }}
+            path: {{ .Values.image.modelRepositoryPath }}
+            readOnly: false
       containers:
-        - name: nginx
-          image: nginx
-          volumeMounts:
-            - mountPath: /models
-              name: models
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.imageName }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           volumeMounts:
             - mountPath: /models
               name: models
-
           args:
             - tritonserver
             {{- range .Values.serverArgs }}
@@ -124,8 +100,7 @@ spec:
             httpGet:
               path: /v2/health/ready
               port: http
-      # commented out because of a race condition with file permissions
-      # preventing load-triton-models from completing
-      #securityContext:
-      #  runAsUser: 1000
-      #  fsGroup: 1000
+
+      securityContext:
+        runAsUser: 1000
+        fsGroup: 1000

@@ -31,8 +31,8 @@ tags:
 image:
   imageName: nvcr.io/nvidia/tritonserver:24.03-py3
   pullPolicy: IfNotPresent
-  modelRepositoryServer: < Replace with the IP Address of your file server >
-  modelRepositoryPath: /srv/models
+  modelRepositoryServer: 10.0.194.248
+  modelRepositoryPath: /
   numGpus: 1
 
 # add server args here e.g. --grpc-use-ssl, --grpc-server-certs, repository-poll-secs, etc

@@ -28,7 +28,7 @@ global:
   name: "triton-inference-server"
 
 tags:
-  autoscaling: true
+  autoscaling: false
   loadBalancing: true
   http_fqdn: "triton-http.f5demo.net"
   grpc_fqdn: "triton-grpc.f5demo.net"
@@ -38,9 +38,8 @@ tags:
 image:
   imageName: nvcr.io/nvidia/tritonserver:24.03-py3
   pullPolicy: IfNotPresent
-  modelRepositoryServer: localhost
-  modelRepositoryPath: /srv/models
-  numGpus: 1
+  modelRepositoryServer: 10.0.194.248
+  modelRepositoryPath: /
 
 
 # add server args here e.g. --grpc-use-ssl, --grpc-server-certs, repository-poll-secs, etc
